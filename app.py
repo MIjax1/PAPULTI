@@ -153,24 +153,21 @@ def obtener_estadisticas(establecimiento_id):
     sin_resultado = cursor.fetchone()[0]
 
     return total_pacientes, positivos, negativos, sin_resultado
+# 📌 Interfaz de Inicio de Sesión
+st.title("Sistema de Monitoreo de Pruebas PAP")
 
 if "usuario" not in st.session_state:
-    st.session_state["usuario"] = None
-
-# Si el usuario no está autenticado, muestra la pantalla de login
-if st.session_state["usuario"] is None:
     username = st.text_input("Usuario")
     password = st.text_input("Contraseña", type="password")
-    
     if st.button("Iniciar sesión"):
         usuario = autenticar_usuario(username, password)
         if usuario:
-            st.session_state["usuario"] = usuario
+            if st.session_state.get("usuario") != usuario:
+                st.session_state.usuario = usuario
+                st.experimental_rerun()
+
         else:
             st.error("Usuario o contraseña incorrectos")
-else:
-    # Si ya hay un usuario, muestra el contenido principal
-    st.write("Bienvenido,", st.session_state["usuario"])
 
 # 📌 Panel de Monitoreo
 if "usuario" in st.session_state:
