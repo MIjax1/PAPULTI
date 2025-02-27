@@ -168,6 +168,7 @@ if st.session_state["usuario"] is None:
         if st.button("Iniciar sesión"):
             usuario = autenticar_usuario(username, password)
             if usuario:
+                if st.session_state.get("usuario") != usuario:
                 # Asigna el usuario a la sesión y vacía el contenedor de login
                 st.session_state["usuario"] = usuario
                 login_container.empty()  # Elimina el formulario de login
