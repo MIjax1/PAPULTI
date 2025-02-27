@@ -165,7 +165,7 @@ if "usuario" not in st.session_state:
         if usuario:
             if st.session_state.get("usuario") != usuario:
                 st.session_state.usuario = usuario
-                st.experimental_rerun()
+                
 
         else:
             st.error("Usuario o contraseña incorrectos")
