@@ -157,18 +157,22 @@ def obtener_estadisticas(establecimiento_id):
 st.title("Sistema de Monitoreo de Pruebas PAP")
 
 if "usuario" not in st.session_state:
-    username = st.text_input("Usuario")
-    password = st.text_input("Contraseña", type="password")
-    if st.button("Iniciar sesión"):
-        usuario = autenticar_usuario(username, password)
-        if usuario:
-            if st.session_state.get("usuario") != usuario:
-                st.session_state.usuario = usuario
-                st.experimental_rerun()
+    st.session_state["usuario"] = None
 
-        else:
-            st.error("Usuario o contraseña incorrectos")
-
+# Si el usuario no está autenticado, muestra el formulario de login
+if st.session_state["usuario"] is None:
+    login_container = st.container()
+    with login_container:
+        username = st.text_input("Usuario", key="username")
+        password = st.text_input("Contraseña", type="password", key="password")
+        if st.button("Iniciar sesión"):
+            usuario = autenticar_usuario(username, password)
+            if usuario:
+                # Asigna el usuario a la sesión y vacía el contenedor de login
+                st.session_state["usuario"] = usuario
+                login_container.empty()  # Elimina el formulario de login
+            else:
+                st.error("Usuario o contraseña incorrectos")
 # 📌 Panel de Monitoreo
 if "usuario" in st.session_state:
     usuario_id, rol, establecimiento_id = st.session_state.usuario
