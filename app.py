@@ -214,7 +214,7 @@ if "usuario" in st.session_state:
                 """, (nombre, edad, fecha_toma, fecha_entrega, establecimiento_id))
                 conn.commit()
                 st.success("Prueba registrada correctamente")
-                st.experimental_rerun()
+                
 
         # 📌 Mostrar las pruebas de PAP del establecimiento de la obstetra
         st.subheader("Pacientes Registrados")
@@ -259,7 +259,7 @@ if "usuario" in st.session_state:
                 st.success("Prueba actualizada correctamente")
                 # Espera medio segundo para permitir que se muestre el mensaje
                 time.sleep(0.5)
-                st.experimental_rerun()
+              
             except Exception as e:
                 st.error("Error al actualizar la prueba: " + str(e))
         
@@ -269,5 +269,5 @@ if "usuario" in st.session_state:
     if st.button("Cerrar sesión"):
         if "usuario" in st.session_state:
             del st.session_state["usuario"]
-        st.experimental_rerun()
+        
 
